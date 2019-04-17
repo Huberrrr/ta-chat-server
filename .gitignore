@@ -1,0 +1,10 @@
+# auto generated files
+node_modules
+package-lock.json
+
+# production build
+dist
+server.js
+
+# db access
+src/server/api/secrets.json
