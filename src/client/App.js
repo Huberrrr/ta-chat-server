@@ -55,15 +55,21 @@ class Message extends React.Component {
     render() {
         if (this.props.sent) {
             return (
-                <div className="message-sent">
-                    <img className="message-pic" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
+                <div className="message-sent-container">
+                    <img className="message-pic-sent" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
+                    <div className="message-sent bg-a">
+                        This is a message that was sent
+                    </div>
                 </div>
             );
 
         } else {
             return (
-                <div className="message-received">
-                    <img className="message-pic" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
+                <div className="message-received-container">
+                    <img className="message-pic-received" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
+                    <div className="message-received">
+                        This is a message that was received
+                    </div>
                 </div>
             );
         }
