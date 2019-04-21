@@ -69,6 +69,10 @@ class Messager extends React.Component {
         socket.on("message", (message) => this.onMessageReceived(message));
     }
 
+    componentDidUpdate() {
+        this.scrollDown();
+    }
+
     onMessageReceived(message) {
         let newMessages = this.state.messages;
         newMessages.push(message);
@@ -76,6 +80,11 @@ class Messager extends React.Component {
         this.setState({
             messages: newMessages
         });
+    }
+
+    scrollDown() {
+        let messagesDiv = document.getElementsByClassName("messages")[0];
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
     render() {
