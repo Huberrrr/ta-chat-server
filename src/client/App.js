@@ -14,15 +14,29 @@ class App extends React.Component {
 }
 
 class ChatRoomsMenu extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            selectedRoom: 0
+        }
+    }
+
+    selectRoom(room) {
+        this.setState({
+            selectedRoom: room
+        });
+    }
+
     render() {
         return (
             <div className="sidebar bg-a">
-                <ChatRoom active={false} />
-                <ChatRoom active={true} />
-                <ChatRoom active={false} />
-                <ChatRoom active={false} />
-                <ChatRoom active={false} />
-                <ChatRoom active={false} />
+                <ChatRoom roomNumber={0} active={this.state.selectedRoom === 0} selectRoom={this.selectRoom.bind(this)} />
+                <ChatRoom roomNumber={1} active={this.state.selectedRoom === 1} selectRoom={this.selectRoom.bind(this)} />
+                <ChatRoom roomNumber={2} active={this.state.selectedRoom === 2} selectRoom={this.selectRoom.bind(this)} />
+                <ChatRoom roomNumber={3} active={this.state.selectedRoom === 3} selectRoom={this.selectRoom.bind(this)} />
+                <ChatRoom roomNumber={4} active={this.state.selectedRoom === 4} selectRoom={this.selectRoom.bind(this)} />
+                <ChatRoom roomNumber={5} active={this.state.selectedRoom === 5} selectRoom={this.selectRoom.bind(this)} />
             </div>
         );
     }
@@ -31,7 +45,7 @@ class ChatRoomsMenu extends React.Component {
 class ChatRoom extends React.Component {
     render() {
         return (
-            <div className={this.props.active ? "room bg-3" : "room"}>
+            <div className={this.props.active ? "room bg-3" : "room"} onClick={() => this.props.selectRoom(this.props.roomNumber)}>
                 <span className="room-name">Chat Room</span>
             </div>
         );
