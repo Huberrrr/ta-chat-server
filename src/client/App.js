@@ -1,12 +1,11 @@
 import React from "react";
-import { hot } from "react-hot-loader";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import LogInScreen from "./pages/LogIn";
 import MessagingScreen from "./pages/Messaging";
 
-class App extends React.Component {
+export default class App extends React.Component {
     render() {
         return (
             <Router>
@@ -16,5 +15,3 @@ class App extends React.Component {
         );
     }
 }
-
-export default hot(module)(App);

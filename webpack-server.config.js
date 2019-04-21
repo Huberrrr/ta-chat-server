@@ -6,8 +6,11 @@ module.exports = {
     target: "node",
     output: {
         path: __dirname,
-        publicPath: "/",
         filename: "server.js"
+    },
+    node: {
+        __dirname: false,
+        __filename: false,
     },
     externals: [nodeExternals()]
 };

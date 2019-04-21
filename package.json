@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"webpack-dev-server --mode development --config ./webpack-client-dev.config.js\" \"nodemon ./src/server/index\"",
-    "start": "npm run build & node ./server",
-    "build": "webpack --mode production --config ./webpack-client.config.js & webpack --mode production --config ./webpack-server.config.js"
+    "dev": "webpack --mode production --config ./webpack-client.config.js && nodemon ./src/server/index",
+    "build": "webpack --mode production --config ./webpack-client.config.js && webpack --mode production --config ./webpack-server.config.js",
+    "start": "npm run build && node ./server"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +15,6 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
-    "concurrently": "^4.1.0",
     "css-loader": "^2.1.1",
     "nodemon": "^1.18.11",
     "style-loader": "^0.23.1",
@@ -31,9 +30,9 @@
     "mongoose": "^5.5.2",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
+    "path": "^0.12.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hot-loader": "^4.8.4",
     "react-router-dom": "^5.0.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0"

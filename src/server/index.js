@@ -17,50 +17,45 @@ function handleConnection(socket) {
     console.log("user connected: " + socket.id);
 
     socket.on('disconnect', handleDisconnect)
-
     socket.on('message', (message) => translateAndEmit(socket, message));
-
 }
 
-
 function handleDisconnect(socket) {
-    console.log("user disconnected");
+    console.log("user disconnected: " + socket.id);
 }
 
 async function translateAndEmit(socket, message) {
-    console.log(message);
+    console.log('original:', message);
     let translated = await translateMessage(message);
     let toSend = {
-        id:socket.id,
-        message:translated
+        id: socket.id,
+        message: translated
     }
     io.emit('message', toSend);
 }
 
 
 async function translateMessage(message) {
-
-    // The target language
-    let temp = message;
+    // target languages
+    let toSend = message;
     const targets = ['ja', 'ru', 'la', 'pl', 'en'];
 
-    // Translates some text into Russian
+    // translate through languages
     for (let x = 0; x < targets.length; x++) {
-        let [translations] = await translate.translate(temp, targets[x]);
+        let [translations] = await translate.translate(toSend, targets[x]);
         translations = Array.isArray(translations) ? translations : [translations];
         translations.forEach((translation, i) => {
-            temp = translation;
+            toSend = translation;
         });
     }
-    console.log(temp);
-    return temp;
+
+    console.log('translated: ', toSend);
+    return toSend;
 }
 
 app.use('/', router);
 
 const port = 5000;
 server.listen(process.env.PORT || port, () => {
-    console.log('server is now onine...');
+    console.log('\n\nserver is now onine...\n\n');
 });
-
-
