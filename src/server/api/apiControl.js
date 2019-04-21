@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schemaControl = require('../db/schemaControl');
 const secrets = require('./secrets.json');
 
-mongoose.connect(secrets.dburl, {
+mongoose.connect(secrets.dbUrl, {
   useNewUrlParser: true
 });
 

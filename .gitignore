@@ -8,3 +8,6 @@ server.js
 
 # db access
 src/server/api/secrets.json
+
+# google cloud api key
+src/server/gc-credentials.json
