@@ -14,7 +14,7 @@ let Room = new Schema({
 });
 let Message = new Schema({
 	owner: { type: String, required: true },
-	message: { type: String, required: true }
+	message: { type: String, required: true },
 	timestamp: { type: Date, default: Date.now, required: true }
 });
 

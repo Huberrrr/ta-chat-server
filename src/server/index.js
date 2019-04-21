@@ -4,7 +4,7 @@ const router = require('./routes');
 
 app.use('/', router);
 
-const port = 3000;
+const port = 5000;
 app.listen(process.env.PORT || port, () => {
     console.log('server is now onine...');
 });

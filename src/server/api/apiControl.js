@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schemaControl = require('../db/schemaControl');
 const secrets = require('./secrets.json');
 
-mongoose.connect(url, {
+mongoose.connect(secrets.dburl, {
   useNewUrlParser: true
 });
 
@@ -19,10 +19,14 @@ async function check_permissions(req, res, id){
   }
 }
 
+let dashboard = async function dashboard(req, res){
+  return res.status(200).send({ success: "dashboard" });
+}
+
 //register a new acount
 let register = async function register(req, res){
+  //passport registration
   if(!db.readyState){ return res.status(500).send({ error: "register: Database connection is down" }); }
-  if(await check_permissions(req, res, req.body.id)){ return; }
 }
 
 //login
@@ -76,6 +80,7 @@ let get_room_messages = async function get_room_messages(req, res){
 }
 
 let apiControl = {
+  dashboard: dashboard,
   register: register,
   login: login,
   logout: logout,
