@@ -61,16 +61,31 @@ class Messager extends React.Component {
         super(props);
 
         this.state = {
-            messages: []
+            messages: [],
+            session: {},
         }
     }
 
     componentDidMount() {
         socket.on("message", (message) => this.onMessageReceived(message));
+
+        fetch('/session')
+            .then((res) => {
+                return res.json();
+            })
+            .then((json) => this.loadSession(json));
     }
 
     componentDidUpdate() {
         this.scrollDown();
+    }
+
+    loadSession(session) {
+        setTimeout(() => {
+            this.setState({
+                session: session
+            });
+        }, 100);
     }
 
     onMessageReceived(message) {
@@ -91,7 +106,10 @@ class Messager extends React.Component {
         return (
             <div className="messager">
                 <Messages messages={this.state.messages} />
-                <MessageSender />
+                {
+                    this.state.session.picture !== undefined &&
+                    <MessageSender pic={this.state.session.picture} />
+                }
             </div>
         );
     }
@@ -102,9 +120,9 @@ class Messages extends React.Component {
         let messages = [];
         for (let i = 0; i < this.props.messages.length; i++) {
             if (socket.id === this.props.messages[i].id) {
-                messages.push(<Message key={i} message={this.props.messages[i].message} sent />);
+                messages.push(<Message key={i} message={this.props.messages[i]} sent />);
             } else {
-                messages.push(<Message key={i} message={this.props.messages[i].message} />);
+                messages.push(<Message key={i} message={this.props.messages[i]} />);
             }
         }
 
@@ -121,9 +139,9 @@ class Message extends React.Component {
         if (this.props.sent) {
             return (
                 <div className="message-sent-container slide-in-right">
-                    <img className="message-pic-sent" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
+                    <img className="message-pic-sent" src={this.props.message.pic} />
                     <div className="message-sent bg-a">
-                        {this.props.message}
+                        {this.props.message.message}
                     </div>
                 </div>
             );
@@ -131,9 +149,9 @@ class Message extends React.Component {
         } else {
             return (
                 <div className="message-received-container slide-in-left">
-                    <img className="message-pic-received" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
+                    <img className="message-pic-received" src={this.props.message.pic} />
                     <div className="message-received bg-2">
-                        {this.props.message}
+                        {this.props.message.message}
                     </div>
                 </div>
             );
@@ -146,7 +164,8 @@ class MessageSender extends React.Component {
         super(props);
 
         this.state = {
-            message: ""
+            message: "",
+            pic: props.pic
         };
     }
 
@@ -162,7 +181,13 @@ class MessageSender extends React.Component {
 
     sendMessage() {
         if (this.state.message === "") return;
-        socket.emit('message', this.state.message);
+
+        let toSend = {
+            message: this.state.message,
+            pic: this.state.pic
+        }
+        socket.emit('message', toSend);
+
         this.setState({
             message: "",
         });

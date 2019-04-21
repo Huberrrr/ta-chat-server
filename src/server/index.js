@@ -25,11 +25,12 @@ function handleDisconnect(socket) {
 }
 
 async function translateAndEmit(socket, message) {
-    console.log('original:', message);
-    let translated = await translateMessage(message);
+    console.log('original:', message.message);
+    let translated = await translateMessage(message.message);
     let toSend = {
         id: socket.id,
-        message: translated
+        message: translated,
+        pic: message.pic
     }
     io.emit('message', toSend);
 }
