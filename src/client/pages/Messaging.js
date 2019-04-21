@@ -5,7 +5,7 @@ import "./Messaging.css";
 export default class MessagingScreen extends React.Component {
     render() {
         return (
-            <div className="app">
+            <div className="messaging-container">
                 <ChatRoomsMenu />
                 <Messager />
             </div>
