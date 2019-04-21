@@ -88,11 +88,31 @@ class Message extends React.Component {
 }
 
 class MessageSender extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            message: ""
+        };
+    }
+
+    messageChange(event) {
+        this.setState({
+            message: event.target.value
+        });
+    }
+
+    sendMessage() {
+        alert("Sending: " + this.state.message);
+    }
+
     render() {
         return (
             <div className="message-sender bg-2">
-                <input class="messager-input bg-2" placeholder="Say something here..." />
-                <i class="fas fa-paper-plane fa-2x color-a"></i>
+                <input className="messager-input bg-2" placeholder="Say something here..." value={this.state.message} onChange={this.messageChange.bind(this)} />
+                <button className="btn btn-link" type="button" onClick={this.sendMessage.bind(this)}>
+                    <i className="fas fa-paper-plane fa-2x color-a"></i>
+                </button>
             </div>
         );
     }
