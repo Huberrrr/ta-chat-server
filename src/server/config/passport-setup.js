@@ -25,7 +25,7 @@ passport.use(
     .findOne({gid: profile.id})
     .then((currentUser) => {
       if(currentUser){ //user exists
-        console.log("already logged in");
+        //console.log("already logged in");
         done(null, currentUser);
       }
       else{ //register new user
@@ -36,7 +36,7 @@ passport.use(
           picture: profile.photos[0].value
         })
         .then((user) => {
-          console.log("Registered new user: " + profile.id + " " + profile.displayName);
+          //console.log("Registered new user: " + profile.id + " " + profile.displayName);
           done(null, user);
         })
       }

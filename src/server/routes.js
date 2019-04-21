@@ -44,6 +44,9 @@ router.get('/google', passport.authenticate('google', {
 router.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
   res.redirect("/chat");
 });
+router.get('/session', (req, res) => {
+  res.send(req.user);
+});
 
 // static files
 router.use('/js', express.static('public'));
