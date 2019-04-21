@@ -5,6 +5,7 @@ const passport = require('passport');
 const secrets = require('./api/secrets');
 const cookieSession = require('cookie-session');
 const path = require('path');
+const passportSetup = require('./config/passport-setup');
 
 // cookies
 router.use(cookieSession({
