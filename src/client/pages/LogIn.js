@@ -11,7 +11,7 @@ export default class LogInScreen extends React.Component {
                 <p className="description">A fun chat room to use with your friends</p>
 
                 <div className="login-button">
-                    <i class="fab fa-google fa-2x login-icon"></i>
+                    <i className="fab fa-google fa-2x login-icon"></i>
                     <Link className="login-text bg-a" to="/chat">
                         Log In With Google
                     </Link>

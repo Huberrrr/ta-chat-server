@@ -5,11 +5,6 @@ import io from 'socket.io-client';
 
 const socket = io('http://localhost:5000/');
 
-//data from server is received here stored in "data"
-socket.on('message', data => {
-    
-});
-
 export default class MessagingScreen extends React.Component {
     render() {
         return (
@@ -30,8 +25,6 @@ class ChatRoomsMenu extends React.Component {
         }
 
     }
-
-
 
     selectRoom(room) {
         this.setState({
@@ -64,10 +57,31 @@ class ChatRoom extends React.Component {
 }
 
 class Messager extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            messages: []
+        }
+    }
+
+    componentDidMount() {
+        socket.on("message", (message) => this.onMessageReceived(message));
+    }
+
+    onMessageReceived(message) {
+        let newMessages = this.state.messages;
+        newMessages.push(message);
+
+        this.setState({
+            messages: newMessages
+        });
+    }
+
     render() {
         return (
             <div className="messager">
-                <Messages />
+                <Messages messages={this.state.messages} />
                 <MessageSender />
             </div>
         );
@@ -76,12 +90,18 @@ class Messager extends React.Component {
 
 class Messages extends React.Component {
     render() {
+        let messages = [];
+        for (let i = 0; i < this.props.messages.length; i++) {
+            if (socket.id === this.props.messages[i].id) {
+                messages.push(<Message key={i} message={this.props.messages[i].message} sent />);
+            } else {
+                messages.push(<Message key={i} message={this.props.messages[i].message} />);
+            }
+        }
+
         return (
             <div className="messages">
-                <Message />
-                <Message />
-                <Message sent />
-                <Message />
+                {messages}
             </div>
         );
     }
@@ -91,20 +111,20 @@ class Message extends React.Component {
     render() {
         if (this.props.sent) {
             return (
-                <div className="message-sent-container">
+                <div className="message-sent-container slide-in-right">
                     <img className="message-pic-sent" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
                     <div className="message-sent bg-a">
-                        This is a message that was sent
+                        {this.props.message}
                     </div>
                 </div>
             );
 
         } else {
             return (
-                <div className="message-received-container">
+                <div className="message-received-container slide-in-left">
                     <img className="message-pic-received" src="https://lh3.googleusercontent.com/-uqmef23Wnp4/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJW2ZCXpDsmqVGczmjvxslDWWgWQ/s192-c-mo/photo.jpg" />
                     <div className="message-received bg-2">
-                        This is a message that was received
+                        {this.props.message}
                     </div>
                 </div>
             );
@@ -120,7 +140,7 @@ class MessageSender extends React.Component {
             message: ""
         };
     }
-    
+
     messageChange(event) {
         this.setState({
             message: event.target.value
@@ -132,10 +152,11 @@ class MessageSender extends React.Component {
     }
 
     sendMessage() {
-        // alert("Sending: " + this.state.message);
+        if (this.state.message === "") return;
         socket.emit('message', this.state.message);
-
-
+        this.setState({
+            message: "",
+        });
     }
 
 
