@@ -14,7 +14,7 @@ function handleConnection(socket) {
 
     socket.on('message', message =>{
         console.log(message);
-        socket.broadcast.emit('message',"hello");
+        socket.broadcast.emit('message',message);
     });
 
 

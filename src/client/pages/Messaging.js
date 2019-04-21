@@ -7,6 +7,7 @@ const socket = io('http://localhost:5000/');
 
 //data from server is received here stored in "data"
 socket.on('message', data => {
+    
 });
 
 export default class MessagingScreen extends React.Component {
@@ -118,16 +119,8 @@ class MessageSender extends React.Component {
         this.state = {
             message: ""
         };
-
-
-        //socket.on('translate',handleTest);
-
     }
-
-
-    handleTest() {
-
-    }
+    
     messageChange(event) {
         this.setState({
             message: event.target.value
