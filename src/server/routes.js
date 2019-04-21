@@ -42,7 +42,7 @@ router.get('/google', passport.authenticate('google', {
   scope: ['profile']
 }));
 router.get('/auth/google/redirect', passport.authenticate('google'), (req, res) => {
-  res.redirect("/dashboard");
+  res.redirect("/chat");
 });
 
 // static files
