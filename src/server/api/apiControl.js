@@ -23,6 +23,10 @@ let dashboard = async function dashboard(req, res){
   return res.status(200).send({ success: "dashboard" });
 }
 
+let index = async function index(req, res){
+  return res.status(200).send({ success: "index" });
+}
+
 //register a new acount
 let register = async function register(req, res){
   //passport registration
@@ -80,6 +84,7 @@ let get_room_messages = async function get_room_messages(req, res){
 }
 
 let apiControl = {
+  index: index,
   dashboard: dashboard,
   register: register,
   login: login,
