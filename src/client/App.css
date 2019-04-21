@@ -22,6 +22,10 @@
     color: #eeeeee;
 }
 
+.color-a {
+    color: #57bc90;
+}
+
 .sidebar {
     flex: 3;
     display: flex;
@@ -38,8 +42,14 @@
     font-weight: bold;
 }
 
-.messages {
+.messager {
     flex: 9;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages {
+    flex: 10;
     padding: 5rem;
 }
 
@@ -80,4 +90,23 @@
     width: 3.25rem;
     margin-left: 1.5rem;
     border-radius: 50%;
+}
+
+.message-sender {
+    flex: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2.5rem;
+    box-shadow: 10px 3px 20px 0px rgba(0, 0, 0, 0.2);
+}
+
+.messager-input {
+    flex-grow: 1;
+    padding: 1rem;
+    margin: 0 2.5rem 0 0;
+    border: 1px solid #f5f5f5;
+    border-radius: 1rem;
+    color: #333333;
+    font-size: 1.25rem;
 }
