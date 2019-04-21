@@ -21,12 +21,21 @@ router.post('/login', apiControl.login);
 router.post('/logout', apiControl.logout);
 
 // page routes
-router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
-router.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
-});
+if (__filename.includes('server.js')) {
+  router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+  });
+  router.get('/chat', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+  });
+} else {
+  router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/index.html'));
+  });
+  router.get('/chat', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public/index.html'));
+  });
+}
 
 // auth routes
 router.get('/google', passport.authenticate('google', {
