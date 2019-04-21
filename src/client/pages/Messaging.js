@@ -1,6 +1,13 @@
 import React from "react";
 import "../App.css";
 import "./Messaging.css";
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000/');
+
+//data from server is received here stored in "data"
+socket.on('message', data => {
+});
 
 export default class MessagingScreen extends React.Component {
     render() {
@@ -20,7 +27,10 @@ class ChatRoomsMenu extends React.Component {
         this.state = {
             selectedRoom: 0
         }
+
     }
+
+
 
     selectRoom(room) {
         this.setState({
@@ -108,8 +118,16 @@ class MessageSender extends React.Component {
         this.state = {
             message: ""
         };
+
+
+        //socket.on('translate',handleTest);
+
     }
 
+
+    handleTest() {
+
+    }
     messageChange(event) {
         this.setState({
             message: event.target.value
@@ -121,8 +139,12 @@ class MessageSender extends React.Component {
     }
 
     sendMessage() {
-        alert("Sending: " + this.state.message);
+        // alert("Sending: " + this.state.message);
+        socket.emit('message', this.state.message);
+
+
     }
+
 
     render() {
         return (
