@@ -3,6 +3,7 @@ let Schema = mongoose.Schema;
 
 let User = new Schema({
 	name: { type: String, required: true },
+	gid: { type: String, required: true },
 	rooms: { type: Array, default: [], required: true }
 });
 let Room = new Schema({
