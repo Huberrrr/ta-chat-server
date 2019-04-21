@@ -29,10 +29,11 @@ passport.use(
         done(null, currentUser);
       }
       else{ //register new user
+        //console.log(profile);
         schemaControl.User.create({
           name: profile.displayName,
           gid: profile.id,
-          //avatar: profile.picture
+          picture: profile.photos[0].value
         })
         .then((user) => {
           console.log("Registered new user: " + profile.id + " " + profile.displayName);
