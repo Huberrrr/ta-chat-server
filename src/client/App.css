@@ -13,6 +13,7 @@
 }
 
 .bg-3 {
+    transition: background-color .15s ease-in-out, color .15s ease-in-out;
     background-color: #eeeeee;
     color: #57bc90;
 }
