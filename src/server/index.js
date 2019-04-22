@@ -18,10 +18,10 @@ function handleConnection(socket) {
 
     socket.on('disconnect', handleDisconnect)
     socket.on('message', (message) => {
-        if (message.willTranslate === 1) {
+        if (message.willTranslate) {
             translateAndEmit(socket, message)
         }
-        else{
+        else {
             let toSend = {
                 id: socket.id,
                 message: message.message,

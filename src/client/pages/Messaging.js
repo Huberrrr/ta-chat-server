@@ -3,7 +3,7 @@ import "../App.css";
 import "./Messaging.css";
 import io from 'socket.io-client';
 
-const socket = io('http://ta-chat-server.herokuapp.com/chat');
+const socket = io('http://localhost:5000');
 
 export default class MessagingScreen extends React.Component {
     render() {
@@ -172,7 +172,9 @@ class MessageSender extends React.Component {
 
     checkboxChange(event) {
         this.setState({
-            checked: event.target.value
+            checked: event.target.checked
+        }, () => {
+            console.log(this.state);
         });
     }
 
@@ -192,7 +194,7 @@ class MessageSender extends React.Component {
         let toSend = {
             message: this.state.message,
             pic: this.state.pic,
-            willTranslate: 0
+            willTranslate: this.state.checked
         }
         socket.emit('message', toSend);
 
@@ -208,7 +210,7 @@ class MessageSender extends React.Component {
                 <div className="toggler">
                     Translate?
                     <label className="switch">
-                        <input type="checkbox" value={this.state.checked} onChange={this.checkboxChange.bind(this)}></input>
+                        <input type="checkbox" checked={this.state.checked} onChange={this.checkboxChange.bind(this)}></input>
                         <span className="slider round"></span>
                     </label>
                 </div>
