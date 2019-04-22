@@ -3,7 +3,8 @@ import "../App.css";
 import "./Messaging.css";
 import io from 'socket.io-client';
 
-const socket = io('http://ta-chat-server.herokuapp.com/');
+// const socket = io('http://ta-chat-server.herokuapp.com/');
+const socket = io("http://localhost:5000");
 fetch('/session')
     .then((res) => {
         return res.json();

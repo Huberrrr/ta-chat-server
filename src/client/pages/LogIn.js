@@ -8,7 +8,7 @@ export default class LogInScreen extends React.Component {
         return (
             <div className="login-container">
                 <p className="title">Totally Accurate Chat Server</p>
-                <p className="description">A fun chat room to use with your friends</p>
+                <p className="description">A chat server that's just trying its best</p>
 
                 <div className="login-button">
                     <i className="fab fa-google fa-2x login-icon"></i>
