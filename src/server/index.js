@@ -17,7 +17,20 @@ function handleConnection(socket) {
     console.log("user connected: " + socket.id);
 
     socket.on('disconnect', handleDisconnect)
-    socket.on('message', (message) => translateAndEmit(socket, message));
+    socket.on('message', (message) => {
+        if (message.willTranslate === 1) {
+            translateAndEmit(socket, message)
+        }
+        else{
+            let toSend = {
+                id: socket.id,
+                message: message.message,
+                pic: message.pic
+            }
+            io.emit('message', toSend);
+        }
+
+    });
 }
 
 function handleDisconnect(socket) {
@@ -39,7 +52,7 @@ async function translateAndEmit(socket, message) {
 async function translateMessage(message) {
     // target languages
     let toSend = message;
-    const targets = ['ja', 'ru', 'la', 'pl', 'en'];
+    const targets = ['ja', 'ru', 'pl', 'en'];
 
     // translate through languages
     for (let x = 0; x < targets.length; x++) {
