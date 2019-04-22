@@ -11,12 +11,26 @@ const translate = new Translate({
     key: secrets.translateKey
 });
 
+let onlineUsers = [];
+
 io.on('connection', handleConnection);
 
 function handleConnection(socket) {
     console.log("user connected: " + socket.id);
 
-    socket.on('disconnect', handleDisconnect)
+    socket.on('disconnect', () => {
+        console.log("user disconnected: " + socket.id);
+
+        for (let i = 0; i < onlineUsers.length; i++) {
+            if (onlineUsers[i].id === socket.id) {
+                onlineUsers.splice(i, 1);
+                break;
+            }
+        }
+
+        io.emit('users', onlineUsers);
+    });
+
     socket.on('message', (message) => {
         if (message.willTranslate) {
             translateAndEmit(socket, message)
@@ -31,10 +45,17 @@ function handleConnection(socket) {
         }
 
     });
-}
 
-function handleDisconnect(socket) {
-    console.log("user disconnected: " + socket.id);
+    socket.on('login', (session) => {
+        let newUser = {
+            id: socket.id,
+            name: session.name,
+            pic: session.picture
+        }
+        onlineUsers.push(newUser);
+
+        io.emit('users', onlineUsers);
+    });
 }
 
 async function translateAndEmit(socket, message) {

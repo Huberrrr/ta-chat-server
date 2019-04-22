@@ -3,7 +3,14 @@ import "../App.css";
 import "./Messaging.css";
 import io from 'socket.io-client';
 
-const socket = io('http://ta-chat-server.herokuapp.com/');
+const socket = io('http://localhost:5000');
+fetch('/session')
+    .then((res) => {
+        return res.json();
+    })
+    .then((json) => {
+        socket.emit('login', json);
+    });
 
 export default class MessagingScreen extends React.Component {
     render() {
@@ -21,36 +28,46 @@ class ChatRoomsMenu extends React.Component {
         super(props);
 
         this.state = {
-            selectedRoom: 0
+            users: []
         }
-
     }
 
-    selectRoom(room) {
-        this.setState({
-            selectedRoom: room
-        });
+    componentDidMount() {
+        socket.on("users", (users) => this.updateUsers(users));
+    }
+
+    updateUsers(users) {
+        setTimeout(() => {
+            this.setState({
+                users: users
+            });
+        }, 100);
     }
 
     render() {
+        let users = [];
+        for (let i = 0; i < this.state.users.length; i++) {
+            if (this.state.users[i].id === socket.id) {
+                users.push(<User user={this.state.users[i]} self />);
+            } else {
+                users.push(<User user={this.state.users[i]} />);
+            }
+        }
+
         return (
             <div className="sidebar bg-a">
-                <ChatRoom roomNumber={0} active={this.state.selectedRoom === 0} selectRoom={this.selectRoom.bind(this)} />
-                <ChatRoom roomNumber={1} active={this.state.selectedRoom === 1} selectRoom={this.selectRoom.bind(this)} />
-                <ChatRoom roomNumber={2} active={this.state.selectedRoom === 2} selectRoom={this.selectRoom.bind(this)} />
-                <ChatRoom roomNumber={3} active={this.state.selectedRoom === 3} selectRoom={this.selectRoom.bind(this)} />
-                <ChatRoom roomNumber={4} active={this.state.selectedRoom === 4} selectRoom={this.selectRoom.bind(this)} />
-                <ChatRoom roomNumber={5} active={this.state.selectedRoom === 5} selectRoom={this.selectRoom.bind(this)} />
+                {users}
             </div>
         );
     }
 }
 
-class ChatRoom extends React.Component {
+class User extends React.Component {
     render() {
         return (
-            <div className={this.props.active ? "room bg-3" : "room"} onClick={() => this.props.selectRoom(this.props.roomNumber)}>
-                <span className="room-name">Chat Room</span>
+            <div className={this.props.self ? "user bg-3" : "user"}>
+                <img className="user-pic" src={this.props.user.pic} />
+                <span className="user-name">{this.props.user.name}</span>
             </div>
         );
     }
@@ -173,8 +190,6 @@ class MessageSender extends React.Component {
     checkboxChange(event) {
         this.setState({
             checked: event.target.checked
-        }, () => {
-            console.log(this.state);
         });
     }
 
