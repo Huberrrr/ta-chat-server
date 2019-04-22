@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode production --config ./webpack-client.config.js && nodemon ./src/server/index",
     "build": "webpack --mode production --config ./webpack-client.config.js && webpack --mode production --config ./webpack-server.config.js",
-    "start": "npm run build && node ./server"
+    "start": "node ./server"
   },
   "author": "",
   "license": "ISC",
