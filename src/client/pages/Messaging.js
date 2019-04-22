@@ -3,7 +3,7 @@ import "../App.css";
 import "./Messaging.css";
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:5000');
+const socket = io('http://ta-chat-server.herokuapp.com/chat');
 
 export default class MessagingScreen extends React.Component {
     render() {

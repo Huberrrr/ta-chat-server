@@ -52,7 +52,7 @@ async function translateAndEmit(socket, message) {
 async function translateMessage(message) {
     // target languages
     let toSend = message;
-    const targets = ['ja', 'ru', 'la', 'pl', 'en'];
+    const targets = ['ja', 'ru', 'pl', 'en'];
 
     // translate through languages
     for (let x = 0; x < targets.length; x++) {
