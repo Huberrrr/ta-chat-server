@@ -26,6 +26,10 @@ if (__filename.includes('server.js')) {
     res.sendFile(path.join(__dirname, 'public/index.html'));
   });
   router.get('/chat', (req, res) => {
+    if (req.user === undefined) {
+      res.redirect("/");
+      return;
+    }
     res.sendFile(path.join(__dirname, 'public/index.html'));
   });
 } else {
@@ -33,6 +37,10 @@ if (__filename.includes('server.js')) {
     res.sendFile(path.join(__dirname, '../../public/index.html'));
   });
   router.get('/chat', (req, res) => {
+    if (req.user === undefined) {
+      res.redirect("/");
+      return;
+    }
     res.sendFile(path.join(__dirname, '../../public/index.html'));
   });
 }
