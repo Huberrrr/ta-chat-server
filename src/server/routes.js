@@ -16,8 +16,6 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 // api routes
-router.post('/register', apiControl.register);
-router.post('/login', apiControl.login);
 router.post('/logout', apiControl.logout);
 
 // page routes
